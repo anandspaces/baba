@@ -1,14 +1,30 @@
 import React from "react";
-import 'bootstrap/dist/css/bootstrap.min.css'; 
-import 'bootstrap-icons/font/bootstrap-icons.css';
 
 export default function Dashboard3() {
     return (
-        <div>
-            <p>write your comments<i className="bi bi-airplane-engines-fill"></i></p>
+      <div className="container mt-5">
+        <div className="card">
+          <div className="card-body">
+            <h5 className="card-title">Social Media Post</h5>
+            <p className="card-text">
+              Write your comments here
+              <i className="bi bi-rocket ml-2"></i>
+            </p>
             <form>
-                <input type="text"></input>
+              <div className="form-group">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Write a comment..."
+                />
+              </div>
+              <button type="submit" className="btn btn-primary">
+                Post Comment
+              </button>
             </form>
+          </div>
         </div>
+      </div>
     );
-}
+  }
+  
