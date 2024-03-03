@@ -1,6 +1,6 @@
 import React from "react";
 
-export default function Dashboard3() {
+export default function Post() {
     return (
       <div className="container mt-5">
         <div className="card">
@@ -18,7 +18,7 @@ export default function Dashboard3() {
                   placeholder="Write a comment..."
                 />
               </div>
-              <button type="submit" className="btn btn-primary">
+              <button type="submit" className="btn btn-primary mt-2">
                 Post Comment
               </button>
             </form>

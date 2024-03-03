@@ -28,7 +28,7 @@ export default function Navigation() {
               </a>
             </li>
             <li className="nav-item dropdown">
-              <a className="nav-link dropdown-toggle" href="#more" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <a className="nav-link dropdown-toggle" href="/profilesetting" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                 More
               </a>
               <ul className="dropdown-menu">
