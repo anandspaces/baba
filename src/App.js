@@ -7,10 +7,11 @@ import Navigation from './components/Navigation';
 import Navigation2 from './components/Navigation2';
 import Dashboard from './components/Home';
 import Profile from './components/Profile';
-import Message from './components/Message';
+// import Message from './components/Message';
 import ProfileSettings from './components/ProfileSettings';
 import Post from './components/Home3';
 import NewsFeed from './components/Home2';
+import { MessageApp } from './components/MessageApp';
 
 function App() {
   return (
@@ -21,7 +22,7 @@ function App() {
         <Route exact path="/" element={<Dashboard />} />
         <Route path="/dashboard2" element={<NewsFeed />} />
         <Route path="/dashboard3" element={<Post />} />
-        <Route path="/message" element={<Message />} />
+        <Route path="/message" element={<MessageApp />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profilesetting" element={<ProfileSettings />} />
       </Routes>
