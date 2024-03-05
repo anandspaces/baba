@@ -11,7 +11,7 @@ import Profile from './components/Profile';
 import ProfileSettings from './components/ProfileSettings';
 import Post from './components/Home3';
 import NewsFeed from './components/Home2';
-import { MessageApp } from './components/MessageApp';
+import MessageApp from './components/MessageApp';
 
 function App() {
   return (

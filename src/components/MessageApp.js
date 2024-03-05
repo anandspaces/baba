@@ -1,25 +1,39 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
-import firebase from 'firebase/compat/app'; // Use compat import
-
+// import firebase from 'firebase/compat/app'; // Use compat import
+import { getDocs, collection, addDoc } from 'firebase/firestore';
 function MessageApp() {
-  const [todos, setTodos] = useState([]); // Use empty array for initial state
+  const [todos, setTodos] = useState([]);
   const [input, setInput] = useState('');
+  const todosCollectionRef = collection(db, 'todos');
 
+  const getTodoList = async () => {
+    try {
+      const data = await getDocs(todosCollectionRef);
+      const filteredData = data.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
+      setTodos(filteredData);
+      console.log(filteredData);
+    } catch (err) {
+      console.error(err);
+    }
+  };
   useEffect(() => {
-    db.collection('todos').orderBy('timestamp','desc').onSnapshot
-    (snapshot => {
-    setTodos(snapshot.docs.map(doc => doc.data()))
-    })
-    }, [input])
-    
-  const addTodo = (e) => {
-    e.preventDefault();
-    db.collection('messageList').add({
-      todo: input,
-      timestamp: firebase.firestore.FieldValue.serverTimestamp(),
-    });
-    setInput('');
+    getTodoList();
+  }, []);
+
+  const addTodo = async () => {
+    try {
+      await addDoc(todosCollectionRef, {
+        todo: input,
+      });
+      getTodoList();
+      console.log("succces");
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   return (
@@ -50,7 +64,7 @@ function MessageApp() {
           </form>
           <ul className="list-group">
             {todos.map((it) => (
-              <MessageDelete key={it.id} arr={it} />
+              <MessageDelete key={it.id} todo={it} />
             ))}
           </ul>
         </div>
@@ -59,15 +73,15 @@ function MessageApp() {
   );
 }
 
-function MessageDelete({ arr }) {
+function MessageDelete({ todo }) {
   const handleDelete = () => {
-    db.collection('messageList').doc(arr.id).delete();
+    db.collection('todos').doc(todo.id).delete();
   };
 
   return (
     <li className="list-group-item d-flex justify-content-between align-items-center">
       <div>
-        <p>{arr.item}</p>
+        <p>{todo.todo}</p>
       </div>
       <button className="btn btn-outline-danger" onClick={handleDelete}>
         Delete
@@ -76,4 +90,4 @@ function MessageDelete({ arr }) {
   );
 }
 
-export { MessageApp };
+export default MessageApp;
