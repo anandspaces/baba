@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { db } from '../firebase';
 // import firebase from 'firebase/compat/app'; // Use compat import
 import { getDocs, collection, addDoc } from 'firebase/firestore';
@@ -7,7 +7,7 @@ function MessageApp() {
   const [input, setInput] = useState('');
   const todosCollectionRef = collection(db, 'todos');
 
-  const getTodoList = async () => {
+  const getTodoList = useCallback(async () => {
     try {
       const data = await getDocs(todosCollectionRef);
       const filteredData = data.docs.map((doc) => ({
@@ -19,10 +19,11 @@ function MessageApp() {
     } catch (err) {
       console.error(err);
     }
-  };
+  }, [todosCollectionRef]);
+  
   useEffect(() => {
-    getTodoList();
-  }, []);
+    getTodoList(); // Include getTodoList as a dependency
+  }, [getTodoList]);
 
   const addTodo = async () => {
     try {
