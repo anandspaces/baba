@@ -1,7 +1,9 @@
 import React from 'react';
-import './styles/styles.css'
+import './styles/styles.css';
 export default function Dashboard() {
-
+    const handleSubmit = () => {
+        alert('friend is added!');
+    }
     return(
         <div>
 
@@ -24,12 +26,12 @@ export default function Dashboard() {
                 </div>
                 <div className="col-md-4">
                     <div className="sidebar">
-                        <h2 className="sidebar-title">Sidebar</h2>
-                        <p className="sidebar-content">Additional information can go here.</p>
+                        <h2 className="sidebar-title">Do you know? </h2>
+                        <p className="sidebar-content">1. Friend1</p><button className="btn btn-primary mt-3" onClick={handleSubmit}>Add Friend</button>
                     </div>
                 </div>
             </div>
         </div>
         </div>
     );
-}
+};
