@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { db } from '../firebase';
-// import firebase from 'firebase/compat/app'; // Use compat import
-import { getDocs, collection, addDoc } from 'firebase/firestore';
+import { getDocs, collection, addDoc, deleteDoc } from 'firebase/firestore';
+
 function MessageApp() {
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState('');
@@ -15,23 +15,25 @@ function MessageApp() {
         id: doc.id,
       }));
       setTodos(filteredData);
-      console.log(filteredData);
     } catch (err) {
       console.error(err);
     }
   }, [todosCollectionRef]);
-  
+
   useEffect(() => {
-    getTodoList(); // Include getTodoList as a dependency
+    getTodoList();
   }, [getTodoList]);
 
-  const addTodo = async () => {
+  const addTodo = async (e) => {
+    e.preventDefault();
+    if (!input.trim()) return;
     try {
       await addDoc(todosCollectionRef, {
         todo: input,
       });
+      setInput('');
       getTodoList();
-      console.log("succces");
+      console.log("success");
     } catch (err) {
       console.error(err);
     }
@@ -64,8 +66,8 @@ function MessageApp() {
             </button>
           </form>
           <ul className="list-group">
-            {todos.map((it) => (
-              <MessageDelete key={it.id} todo={it} />
+            {todos.map((todo) => (
+              <MessageDelete key={todo.id} todo={todo} />
             ))}
           </ul>
         </div>
@@ -75,8 +77,12 @@ function MessageApp() {
 }
 
 function MessageDelete({ todo }) {
-  const handleDelete = () => {
-    db.collection('todos').doc(todo.id).delete();
+  const handleDelete = async () => {
+    try {
+      await deleteDoc(db.collection('todos').doc(todo.id));
+    } catch (error) {
+      console.error("Error deleting todo: ", error);
+    }
   };
 
   return (
