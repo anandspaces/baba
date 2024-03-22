@@ -65,7 +65,7 @@ function MessageApp() {
               Add Todo
             </button>
           </form>
-          <ul className="list-group">
+          <ul className="list-group mt-5">
             {todos.map((todo) => (
               <MessageDelete key={todo.id} todo={todo} />
             ))}

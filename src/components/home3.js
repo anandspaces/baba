@@ -56,14 +56,11 @@ function Post() {
       <div className="card">
         <div className="card-body">
           <h5 className="card-title">Social Media Post</h5>
-          <p className="card-text">
-            Write your comments here
-            <i className="bi bi-rocket ml-2"></i>
-          </p>
           <form onSubmit={addComment}>
             <div className="form-group">
               <label htmlFor="commentInput" className="form-label">
-                Write a Comment
+              Write your comments here
+              <i className="bi bi-rocket ml-2"></i>
               </label>
               <input
                 type="text"
@@ -81,7 +78,7 @@ function Post() {
               Post Comment
             </button>
           </form>
-          <ul className="list-group">
+          <ul className="list-group mt-5">
             {comments.map((comment) => (
               <CommentDelete key={comment.id} comment={comment} onDelete={handleDelete} />
             ))}
