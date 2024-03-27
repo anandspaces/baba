@@ -4,7 +4,7 @@ export default function Header(){
     return (
         <>
         <header className='container'>
-            Rocket Social homepage
+            Social Rocket homepage
         </header>
         </>
     )

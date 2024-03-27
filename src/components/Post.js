@@ -55,7 +55,7 @@ function Post() {
     <div className="container mt-5">
       <div className="card">
         <div className="card-body">
-          <h5 className="card-title">Social Media Post</h5>
+          <h5 className="card-title">Comment Section</h5>
           <form onSubmit={addComment}>
             <div className="form-group">
               <label htmlFor="commentInput" className="form-label">
