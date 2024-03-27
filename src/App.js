@@ -7,9 +7,8 @@ import Navigation from './components/Navigation';
 import Navigation2 from './components/Navigation2';
 import Dashboard from './components/Dashboard';
 import Profile from './components/Profile';
-// import Message from './components/Message';
+import Message from './components/Message';
 import ProfileSettings from './components/ProfileSettings';
-import Post from './components/Post';
 import NewsFeed from './components/NewsFeed';
 import MessageApp from './components/MessageApp';
 
@@ -21,12 +20,11 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
         <Route path="/newsfeed" element={<NewsFeed />} />
-        <Route path="/post" element={<Post />} />
-        <Route path="/message" element={<MessageApp />} />
+        <Route path="/message" element={<Message />} />
+        <Route path="/todo" element={<MessageApp />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profilesetting" element={<ProfileSettings />} />
       </Routes>
-      <Post />
       <Footer />
     </Router>
   );

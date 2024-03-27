@@ -1,15 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './styles/styles.css';
 import image1 from './images/image1.jpeg'
 import Sidebar from './Sidebar';
+import Comment from './Comment';
 
 export default function Dashboard() {
-    const [friends, setFriends] = useState(['Amit Kumar','Shyam Sinha','Raj Malhotra','Ved Trivedi']);
-
-    const handleSubmit = (addedFriend) => {
-        alert(`${addedFriend} is added as a friend!`);
-        setFriends(prevFriends => prevFriends.filter(friend => friend !== addedFriend));
-    };
+    
 
     const post = [
         {
@@ -34,51 +30,33 @@ export default function Dashboard() {
         },
     ];
     return (
-        <>
-        <div className="container mt-4">
-            <h2>Social Media Posts</h2>
-            {post.slice(0, 5).map(post => (
-                <div key={post.id} className="post">
-                    {post.image && <img src={post.image} alt="Post" />}
-                    <div className="card-body">
-                        <p className="post-content">{post.content}</p>
-                        <div className="post-details">
-                            <span className="post-author">{post.author}</span>
-                            <span className="post-timestamp">{post.timestamp}</span>
-                        </div>
-                        <div className="post-stats">
-                            <span className="post-likes">Likes: {post.likes}</span>
-                            <span className="post-comments">Comments: {post.comments}</span>
-                            <span className="post-shares">Shares: {post.shares}</span>
-                        </div>
-                    </div>
-                </div>
-            ))}
-        </div>
         <div className="container mt-4">
             <div className="row">
                 <div className="col-md-8">
-                    <div className="post">
+                    <h2>Social Media Posts</h2>
+                    {post.slice(0, 5).map(post => (
+                    <div key={post.id} className="post">
+                        {post.image && <img src={post.image} alt="Post" />}
                         <div className="card-body">
-                            <h2 className="post-title">Post Title 1</h2>
-                            <img src='images/image1.jpg' alt='image1' />
                             <p className="post-content">{post.content}</p>
+                            <div className="post-details">
+                                <span className="post-author">{post.author}</span>
+                                <span className="post-timestamp">{post.timestamp}</span>
+                            </div>
+                            <div className="post-stats">
+                                <span className="post-likes">Likes: {post.likes}</span>
+                                <span className="post-comments">Comments: {post.comments}</span>
+                                <span className="post-shares">Shares: {post.shares}</span>
+                            </div>
                         </div>
                     </div>
-                    <div className="post">
-                        <div className="card-body">
-                            <h2 className="post-title">Post Title 2</h2>
-                            <img src='images/image1.jpg' alt='image1' />
-                            <p className="post-content">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere, metus non consectetur pretium.</p>
-                        </div>
-                    </div>
-                    {/* <!-- Add more posts as needed --> */}
+                    ))}
+                    <Comment />
                 </div>
                 <div className="col-md-4">
-                    <Sidebar friends={friends} handleSubmit={handleSubmit} />
+                    <Sidebar/>
                 </div>
             </div>
         </div>
-        </>
     );
 }
