@@ -36,3 +36,18 @@ body {
     font-size: 16px;
     color: #333;
 }
+
+/* dashboard style */
+.btn-like {
+    border: none;
+    background-color: transparent;
+    padding: 0;
+    font-size: 1rem; /* Adjust font size as needed */
+    color: #000; /* Set color for the heart icon */
+}
+
+.btn-like:hover,
+.btn-like:focus {
+    background-color: transparent;
+    color: #007bff; /* Set color for the heart icon on hover */
+}
