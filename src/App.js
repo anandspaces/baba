@@ -1,7 +1,4 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap-icons/font/bootstrap-icons.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
 import Footer from './components/Footer';
 import Navigation from './components/Navigation';
 import Navigation2 from './components/Navigation2';
