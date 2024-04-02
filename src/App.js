@@ -11,6 +11,7 @@ import Message from './components/Message';
 import ProfileSettings from './components/ProfileSettings';
 import NewsFeed from './components/NewsFeed';
 import MessageApp from './components/MessageApp';
+import Comment from './components/Comment'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route exact path="/" element={<Dashboard />} />
         <Route path="/newsfeed" element={<NewsFeed />} />
+        <Route path="/comment" element={<Comment />} />
         <Route path="/message" element={<Message />} />
         <Route path="/todo" element={<MessageApp />} />
         <Route path="/profile" element={<Profile />} />

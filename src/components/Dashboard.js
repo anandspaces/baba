@@ -7,9 +7,15 @@ import Sidebar from './Sidebar';
 
 export default function Dashboard() {
     const [liked, setLiked] = useState(false);
-
+    const [likes, setLikes] = useState(240);
     const toggleLike = () => {
         setLiked(!liked);
+        if(!liked) {
+            setLikes(prevlikes => prevlikes + 1);
+        } else {
+            setLikes(prevlikes => prevlikes - 1);
+        }
+        
     };
 
 
@@ -59,7 +65,7 @@ export default function Dashboard() {
                                             <button className="btn btn-icon btn-outline-primary me-2" onClick={toggleLike}>
                                             {liked ? <i className="bi bi-heart-fill"></i> : <i className="bi bi-heart"></i>}
                                             </button>
-                                            <p className="mb-0 me-4">{post.likes}</p>
+                                            <p className="mb-0 me-4">{likes}</p>
                                         </div>
                                         <div className="d-flex align-items-center">
                                             <button className="btn btn-icon btn-outline-secondary me-2"><i className="bi bi-chat"></i></button>
