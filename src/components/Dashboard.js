@@ -6,26 +6,13 @@ import Sidebar from './Sidebar';
 // import Comment from './Comment';
 
 export default function Dashboard() {
-    const [liked, setLiked] = useState(false);
-    const [likes, setLikes] = useState(240);
-    const toggleLike = () => {
-        setLiked(!liked);
-        if(!liked) {
-            setLikes(prevlikes => prevlikes + 1);
-        } else {
-            setLikes(prevlikes => prevlikes - 1);
-        }
-        
-    };
-
-
     const post = [
         {
             id:1,
             content:'Strong people makes places strong',
             author:'Abraham Lincoln',
             timestamp:'12:34:66 3/26/2024',
-            likes:'24',
+            likes:24,
             comments:'45',
             shares:'100',
             image:image1,
@@ -35,12 +22,31 @@ export default function Dashboard() {
             content:'Strong places make people strong',
             author:`Jeane D'souza`,
             timestamp:'12:34:66 3/26/2024',
-            likes:'24',
+            likes:24,
             comments:'45',
             shares:'100',
             image:image2,
         },
     ];
+    const [liked, setLiked] = useState(new Array(post.length).fill(false));
+    const [likes, setLikes] = useState(post.map(post => post.likes));
+
+    const toggleLike = (postId) => {
+        setLiked(prevLiked => {
+            const newLiked = [...prevLiked];
+            newLiked[postId] = !newLiked[postId];
+            setLikes(prevLikes => {
+                return prevLikes.map((likeCount, index) => {
+                    if (index === postId) {
+                        return newLiked[postId] ? likeCount - 1 : likeCount + 1;
+                    }
+                    return likeCount;
+                });
+            });
+            return newLiked;
+        });
+    };
+
     return (
         <div className="container mt-4">
             <div className="row">
@@ -51,21 +57,21 @@ export default function Dashboard() {
                         <div className='card shadow'>
                             <div className="card-body">
                                 <div className='flex align-items-center'>
-                                {post.pfp && <img src="profile-picture.jpg" alt="Profile" className="rounded-circle me-3" style={{ width: '50px', height: '50px' }} />}
+                                    {post.pfp && <img src="profile-picture.jpg" alt="Profile" className="rounded-circle me-3" style={{ width: '50px', height: '50px' }} />}
                                     <div className='d-flex justify-content-between'>
                                         <h5 className='card-title mb-0'>{post.author}</h5>
                                         <p className='card-text text-muted'>{post.timestamp}</p>
                                     </div>
                                     <div style={{ width: '100%', overflow: 'hidden' }}>
-                                    {post.image && <img src={post.image} className='image-fluid mt-3 rounded' alt="Post" style={{ width: '100%', maxHeight: '400px' }} />}
+                                        {post.image && <img src={post.image} className='image-fluid mt-3 rounded' alt="Post" style={{ width: '100%', maxHeight: '400px' }} />}
                                     </div>
                                     <p className="card-text mt-3">{post.content}</p>
                                     <div className="d-flex justify-content-between align-items-center mt-3">
                                         <div className="d-flex align-items-center">
-                                            <button className="btn btn-icon btn-outline-primary me-2" onClick={toggleLike}>
-                                            {liked ? <i className="bi bi-heart-fill"></i> : <i className="bi bi-heart"></i>}
+                                            <button className="btn btn-icon btn-outline-primary me-2" onClick={() => toggleLike(post.id)}>
+                                                {liked[post.id] ? <i className="bi bi-heart-fill"></i> : <i className="bi bi-heart"></i>}
                                             </button>
-                                            <p className="mb-0 me-4">{likes}</p>
+                                            <p className="mb-0 me-4">{likes[post.id]}</p>
                                         </div>
                                         <div className="d-flex align-items-center">
                                             <button className="btn btn-icon btn-outline-secondary me-2"><i className="bi bi-chat"></i></button>
