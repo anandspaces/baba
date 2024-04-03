@@ -28,22 +28,20 @@ export default function Dashboard() {
             image:image2,
         },
     ];
-    const [liked, setLiked] = useState(new Array(post.length).fill(false));
+    const [liked, setLiked] = useState(post.map(() => false));
     const [likes, setLikes] = useState(post.map(post => post.likes));
 
     const toggleLike = (postId) => {
         setLiked(prevLiked => {
             const newLiked = [...prevLiked];
-            newLiked[postId] = !newLiked[postId];
-            setLikes(prevLikes => {
-                return prevLikes.map((likeCount, index) => {
-                    if (index === postId) {
-                        return newLiked[postId] ? likeCount - 1 : likeCount + 1;
-                    }
-                    return likeCount;
-                });
-            });
+            newLiked[postId - 1] = !newLiked[postId - 1]; // Adjust index to match array indexing
             return newLiked;
+        });
+
+        setLikes(prevLikes => {
+            const newLikes = [...prevLikes];
+            newLikes[postId - 1] += liked[postId - 1] ? -1 : 1; // Adjust index to match array indexing
+            return newLikes;
         });
     };
 
@@ -52,44 +50,49 @@ export default function Dashboard() {
             <div className="row">
                 <div className="col-md-8">
                     <h2>Social Media Posts</h2>
-                    {post.slice(0, 5).map(post => (
-                    <div key={post.id} className="container mt-4">
-                        <div className='card shadow'>
-                            <div className="card-body">
-                                <div className='flex align-items-center'>
-                                    {post.pfp && <img src="profile-picture.jpg" alt="Profile" className="rounded-circle me-3" style={{ width: '50px', height: '50px' }} />}
-                                    <div className='d-flex justify-content-between'>
-                                        <h5 className='card-title mb-0'>{post.author}</h5>
-                                        <p className='card-text text-muted'>{post.timestamp}</p>
-                                    </div>
-                                    <div style={{ width: '100%', overflow: 'hidden' }}>
-                                        {post.image && <img src={post.image} className='image-fluid mt-3 rounded' alt="Post" style={{ width: '100%', maxHeight: '400px' }} />}
-                                    </div>
-                                    <p className="card-text mt-3">{post.content}</p>
-                                    <div className="d-flex justify-content-between align-items-center mt-3">
-                                        <div className="d-flex align-items-center">
-                                            <button className="btn btn-icon btn-outline-primary me-2" onClick={() => toggleLike(post.id)}>
-                                                {liked[post.id] ? <i className="bi bi-heart-fill"></i> : <i className="bi bi-heart"></i>}
-                                            </button>
-                                            <p className="mb-0 me-4">{likes[post.id]}</p>
+                    {post.map(post => (
+                        <div key={post.id} className="container mt-4">
+                            <div className='card shadow'>
+                                <div className="card-body">
+                                    <div className='flex align-items-center'>
+                                        {/* Render profile picture if available */}
+                                        {post.pfp && <img src="profile-picture.jpg" alt="Profile" className="rounded-circle me-3" style={{ width: '50px', height: '50px' }} />}
+                                        <div className='d-flex justify-content-between'>
+                                            <h5 className='card-title mb-0'>{post.author}</h5>
+                                            <p className='card-text text-muted'>{post.timestamp}</p>
                                         </div>
-                                        <div className="d-flex align-items-center">
-                                            <button className="btn btn-icon btn-outline-secondary me-2"><i className="bi bi-chat"></i></button>
-                                            <p className="mb-0 me-4">{post.comments}</p>
+                                        <div style={{ width: '100%', overflow: 'hidden' }}>
+                                            {/* Render post image if available */}
+                                            {post.image && <img src={post.image} className='image-fluid mt-3 rounded' alt="Post" style={{ width: '100%', maxHeight: '400px' }} />}
                                         </div>
-                                        <div className="d-flex align-items-center">
-                                            <button className="btn btn-icon btn-outline-danger me-2"><i className="bi bi-share"></i></button>
-                                            <p className="mb-0">{post.shares}</p>
+                                        <p className="card-text mt-3">{post.content}</p>
+                                        <div className="d-flex justify-content-between align-items-center mt-3">
+                                            <div className="d-flex align-items-center">
+                                                {/* Like button */}
+                                                <button className="btn btn-icon btn-outline-primary me-2" onClick={() => toggleLike(post.id)}>
+                                                    {/* Render heart icon based on like status */}
+                                                    {liked[post.id - 1] ? <i className="bi bi-heart-fill"></i> : <i className="bi bi-heart"></i>}
+                                                </button>
+                                                {/* Display the number of likes */}
+                                                <p className="mb-0 me-4">{likes[post.id - 1]}</p>
+                                            </div>
+                                            <div className="d-flex align-items-center">
+                                                <button className="btn btn-icon btn-outline-secondary me-2"><i className="bi bi-chat"></i></button>
+                                                <p className="mb-0 me-4">{post.comments}</p>
+                                            </div>
+                                            <div className="d-flex align-items-center">
+                                                <button className="btn btn-icon btn-outline-danger me-2"><i className="bi bi-share"></i></button>
+                                                <p className="mb-0">{post.shares}</p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                     ))}
                 </div>
                 <div className="col-md-4">
-                    <Sidebar/>
+                    <Sidebar />
                 </div>
             </div>
         </div>
