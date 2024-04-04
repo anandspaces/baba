@@ -1,16 +1,8 @@
 import React from 'react';
-
+import './styles/styles.css'
 export default function Footer() {
-    const customFooter = {
-        backgroundColor: '#333',
-        color: '#fff',
-        padding: '20px 0',
-        textAlign: 'center',
-        marginTop: '500px',
-    };
-
     return (
-        <footer style={customFooter}>
+        <footer className='customFooter'>
             <div className="container">
                 <div className="row">
                     <div className="col-md-12">

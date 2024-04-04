@@ -51,3 +51,10 @@ body {
     background-color: transparent;
     color: #007bff; /* Set color for the heart icon on hover */
 }
+.customFooter {
+    background-color: #333;
+    color: #fff;
+    padding: 20px 0;
+    text-align: center;
+    margin-top: 500px;
+}
