@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 
 export default function Sidebar() {
-    const [friends, setFriends] = useState(['Vaibhaw Anand','Shyam Sinha','Raj Roy','Naveen Nehra']);
+    const [friends, setFriends] = useState(['Vaibhaw Anand','Raj Roy', 'Sam Shaw','Tarak Tichkule']);
 
     const handleSubmit = (addedFriend) => {
         alert(`${addedFriend} is added as a friend!`);

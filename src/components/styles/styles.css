@@ -58,3 +58,32 @@ body {
     text-align: center;
     margin-top: 500px;
 }
+/* Styling for custom file input */
+.customInput {
+    width: 0.1px; /* Width */
+    height: 0.1px; /* Height */
+    opacity: 0; /* Hide the input */
+    overflow: hidden; /* Hide overflowing content */
+    position: absolute; /* Positioning */
+    z-index: -1; /* Bring behind other elements */
+}
+
+/* Styling for custom file input label */
+.customInput + .customLabel {
+    color: white; /* Text color */
+    background-color: #007bff; /* Default background color */
+    display: inline-block; /* Inline block display */
+    padding: 10px 10px; /* Padding */
+    border-radius: 5px; /* Rounded corners */
+}
+
+/* Styling for custom file input label when focused or hovered */
+.customInput:focus + .customLabel,
+.customInput + .customLabel:hover {
+    background-color: #0056b3; /* Darker background color */
+}
+
+/* Cursor style for the custom file input label */
+.inputfile + .customLabel {
+    cursor: pointer; /* Pointer cursor */
+}

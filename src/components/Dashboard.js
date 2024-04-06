@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
-import './styles/styles.css';
 import image1 from './images/image1.jpeg';
 import image2 from './images/image2.jpeg';
 import Sidebar from './Sidebar';
+import './styles/styles.css';
 // import Comment from './Comment';
 
 export default function Dashboard() {
-    const [newPostContent, setNewPostContent] = useState(""); // State to store the content of the new post
-    const [posts, setPosts] = useState([
+    const [newPostContent, setNewPostContent] = useState("");
+    const [post, setPost] = useState([
         {
             id:1,
             content:'Strong people makes places strong',
-            author:'Abraham Lincoln',
+            author:'Kristen Stewart',
             timestamp:'12:34:66 3/26/2024',
             likes:24,
             comments:'45',
@@ -21,7 +21,7 @@ export default function Dashboard() {
         {
             id:2,
             content:'Strong places make people strong',
-            author:`Jeane D'souza`,
+            author:'Scarlet Jhonsson',
             timestamp:'12:34:66 3/26/2024',
             likes:24,
             comments:'45',
@@ -29,34 +29,48 @@ export default function Dashboard() {
             image:image2,
         },
     ]);
-
-    const handleLike = (postId) => {
-        const updatedPosts = posts.map(post => {
-            if (post.id === postId) {
-                return {
-                    ...post,
-                    likes: post.likes + 1
-                };
-            }
-            return post;
+    const [liked, setLiked] = useState(post.map(() => false));
+    const [likes, setLikes] = useState(post.map(post => post.likes));
+    const [image, setImage] = useState(null);
+    const toggleLike = (postId) => {
+        setLiked(prevLiked => {
+            const newLiked = [...prevLiked];
+            newLiked[postId - 1] = !newLiked[postId - 1]; // Adjust index to match array indexing
+            return newLiked;
         });
-        setPosts(updatedPosts);
-    };
 
+        setLikes(prevLikes => {
+            const newLikes = [...prevLikes];
+            newLikes[postId - 1] += liked[postId - 1] ? -1 : 1; // Adjust index to match array indexing
+            return newLikes;
+        });
+    };
+    const handleImageChange = (e) => {
+        if (e.target.files[0]) {
+            setImage(e.target.files[0]);
+        }
+    };
     const handleNewPostSubmit = (event) => {
-        event.preventDefault();
-        const newPost = {
-            id: posts.length + 1, // Generate new post id
-            content: newPostContent,
-            author: 'Your Name', // You can fetch this from user authentication
-            timestamp: new Date().toLocaleString(), // Current timestamp
-            likes: 0,
-            comments: 0,
-            shares: 0,
-            image: null, // You can add support for image upload
-        };
-        setPosts([...posts, newPost]);
-        setNewPostContent(""); // Clear the new post content
+        try {
+            event.preventDefault();
+            const newPost = {
+                id: post.length + 1,
+                content: newPostContent,
+                author: "",
+                timestamp: new Date().toLocaleString(),
+                likes: 0,
+                comments: 0,
+                shares: 0,
+                image: image ? URL.createObjectURL(image) : null,
+            };
+
+            setPost([...post, newPost]); // Add new post to state
+            setNewPostContent(""); // Clear the new post content
+            setImage(null); // Clear the selected image
+        } catch (error) {
+            console.error('Error adding post:', error);
+            window.alert('Error adding post!');
+        }
     };
 
     return (
@@ -66,17 +80,32 @@ export default function Dashboard() {
                     <h2>Social Media Posts</h2>
                     {/* Form to add new post */}
                     <form onSubmit={handleNewPostSubmit}>
-                        <textarea
-                            className="form-control mb-3"
-                            rows="3"
-                            placeholder="What's on your mind?"
-                            value={newPostContent}
-                            onChange={(e) => setNewPostContent(e.target.value)}
-                        ></textarea>
+                        <div className="form-group">
+                            <textarea
+                                className="form-control mb-3"
+                                rows="5"
+                                placeholder="What's on your mind?"
+                                value={newPostContent}
+                                onChange={(e) => setNewPostContent(e.target.value)}
+                                required
+                            ></textarea>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                        <input
+                            type="file"
+                            id="fileInput"
+                            className="customInput"
+                            accept="image/*" 
+                            onChange={handleImageChange}
+                        />
+                        <label className="customLabel" htmlFor="fileInput">Choose File</label>
                         <button type="submit" className="btn btn-primary">Post</button>
+                        </div>
+                        
                     </form>
+
                     {/* Existing posts */}
-                    {posts.map(post => (
+                    {post.map(post => (
                         <div key={post.id} className="container mt-4">
                             <div className='card shadow'>
                                 <div className="card-body">
@@ -95,11 +124,12 @@ export default function Dashboard() {
                                         <div className="d-flex justify-content-between align-items-center mt-3">
                                             <div className="d-flex align-items-center">
                                                 {/* Like button */}
-                                                <button className="btn btn-icon btn-outline-primary me-2" onClick={() => handleLike(post.id)}>
-                                                    <i className="bi bi-heart"></i>
+                                                <button className="btn btn-icon btn-outline-primary me-2" onClick={() => toggleLike(post.id)}>
+                                                    {/* Render heart icon based on like status */}
+                                                    {liked[post.id - 1] ? <i className="bi bi-heart-fill"></i> : <i className="bi bi-heart"></i>}
                                                 </button>
                                                 {/* Display the number of likes */}
-                                                <p className="mb-0 me-4">{post.likes}</p>
+                                                <p className="mb-0 me-4">{likes[post.id - 1]}</p>
                                             </div>
                                             <div className="d-flex align-items-center">
                                                 <button className="btn btn-icon btn-outline-secondary me-2"><i className="bi bi-chat"></i></button>
