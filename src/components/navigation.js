@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase';
+import { useNavigate } from 'react-router-dom';
 
 export default function Navigation() {
     const [isOpen, setIsOpen] = useState(false);
@@ -13,6 +16,17 @@ export default function Navigation() {
         setNavOpen(!navOpen);
     };
 
+    const navigate = useNavigate();
+ 
+    const handleLogout = () => {               
+        signOut(auth).then(() => {
+        // Sign-out successful.
+            navigate("/");
+            console.log("Signed out successfully")
+        }).catch((error) => {
+        // An error happened.
+        });
+    }
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
             <div className="container">
@@ -51,7 +65,7 @@ export default function Navigation() {
                             <ul className={`dropdown-menu${isOpen ? " show" : ""}`}>
                                 <li><button className="dropdown-item">Settings</button></li>
                                 <li><button className="dropdown-item">Help</button></li>
-                                <li><button className="dropdown-item">Logout</button></li>
+                                <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
                             </ul>
                         </li>
                     </ul>

@@ -1,11 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import image1 from './images/image1.jpeg';
 import image2 from './images/image2.jpeg';
 import Sidebar from './Sidebar';
 import './styles/styles.css';
 // import Comment from './Comment';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from '../firebase';
 
 export default function Dashboard() {
+    useEffect(()=>{
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+              // User is signed in
+              const uid = user.uid;
+              // ...
+              console.log("uid", uid)
+            } else {
+              // User is signed out
+              // ...
+              console.log("user is logged out")
+            }
+          });
+         
+    }, []);
     const [newPostContent, setNewPostContent] = useState("");
     const [post, setPost] = useState([
         {

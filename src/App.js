@@ -9,6 +9,8 @@ import ProfileSettings from './components/ProfileSettings';
 import NewsFeed from './components/NewsFeed';
 import MessageApp from './components/MessageApp';
 import Comment from './components/Comment'
+import Login from './components/Login';
+import Signup from './components/Signup';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/todo" element={<MessageApp />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/profilesetting" element={<ProfileSettings />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
       </Routes>
       <Footer />
     </Router>
