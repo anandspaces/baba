@@ -1,10 +1,26 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { signOut } from 'firebase/auth';
+import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
 export default function Navigation() {
+    const [user, setUser] = useState(null);
+    useEffect(()=>{
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+              // User is signed in
+              const uid = user.uid;
+              setUser(user);
+              console.log("uid", uid);
+            } else {
+              // User is signed out
+              setUser(null);
+              console.log("user is logged out")
+            }
+          });
+    }, []);
+
     const [isOpen, setIsOpen] = useState(false);
     const [navOpen, setNavOpen] = useState(false);
 
@@ -18,19 +34,25 @@ export default function Navigation() {
 
     const navigate = useNavigate();
  
-    const handleLogout = () => {               
-        signOut(auth).then(() => {
-        // Sign-out successful.
-            navigate("/");
-            console.log("Signed out successfully")
-        }).catch((error) => {
-        // An error happened.
-        });
+    const handleLogout = () => {
+        if(user===null) {
+            alert("Already logged out!");
+        } else {
+            signOut(auth).then(() => {
+                // Sign-out successful.
+                    navigate("/login");
+                    alert("Signed out successfully")
+                    console.log("Signed out successfully")
+                }).catch((error) => {
+                console.log("An error happened");
+                });
+        }              
+        
     }
     return (
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
             <div className="container">
-                <Link className="navbar-brand d-flex align-items-center" to="/">
+                <Link className="navbar-brand d-flex align-items-center" to="/dashboard">
                     <i className="bi bi-rocket text-light me-2"></i> Social Rocket
                 </Link>
                 <button className="navbar-toggler" type="button" onClick={toggleNavbar}>
@@ -43,13 +65,13 @@ export default function Navigation() {
                     </form>
                     <ul className="navbar-nav mb-2 mb-lg-0">
                         <li className="nav-item">
-                            <Link className="nav-link" to="/">
+                            <Link className="nav-link" to="/dashboard">
                                 <i className="bi bi-house-door-fill me-1"></i> Home
                             </Link>
                         </li>
                         <li className="nav-item">
-                            <Link to="/profile" className="nav-link">
-                                <i className="bi bi-person me-1"></i> Profile
+                            <Link to="/friends" className="nav-link">
+                                <i className="bi bi-person me-1"></i> Friends
                             </Link>
                         </li>
                         <li className="nav-item">
