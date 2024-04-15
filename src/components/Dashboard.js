@@ -5,10 +5,75 @@ import Sidebar from './Sidebar';
 import './styles/styles.css';
 // import Comment from './Comment';
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from '../firebase';
+import { auth, storage } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 
+// firebase storage
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+
+
 export default function Dashboard() {
+    // firebase storage
+    // firebase storage download
+    // const starsRef = ref(storage, 'images/stars.jpg');
+    // // Get the download URL
+    // getDownloadURL(starsRef)
+    // .then((url) => {
+    // // Insert url into an <img> tag to "download"
+    // })
+    // .catch((error) => {
+    // // A full list of error codes is available at
+    // // https://firebase.google.com/docs/storage/web/handle-errors
+    // switch (error.code) {
+    //     case 'storage/object-not-found':
+    //     // File doesn't exist
+    //     break;
+    //     case 'storage/unauthorized':
+    //     // User doesn't have permission to access the object
+    //     break;
+    //     case 'storage/canceled':
+    //     // User canceled the upload
+    //     break;
+
+    //     // ...
+
+    //     case 'storage/unknown':
+    //     // Unknown error occurred, inspect the server response
+    //     break;
+    //     default:
+    //     console.log("default");
+    // }
+    // });
+
+    // firebase upload
+    // Create the file metadata
+/** @type {any} */
+const metadata = {
+    contentType: 'image/jpeg'
+  };
+  
+  
+  
+    // Points to the root reference
+    // const storageRef = ref(storage);
+
+    // Points to 'images'
+    // const imagesRef = ref(storageRef, 'images');
+
+    // Points to 'images/space.jpg'
+    // Note that you can use variables to create child values
+    // const fileName = 'space.jpg';
+    // const spaceRef = ref(imagesRef, fileName);
+
+    // File path is 'images/space.jpg'
+    // const path = spaceRef.fullPath;
+
+    // File name is 'space.jpg'
+    // const name = spaceRef.name;
+
+    // Points to 'images'
+    // const imagesRefAgain = spaceRef.parent;
+
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     useEffect(()=>{
@@ -70,6 +135,8 @@ export default function Dashboard() {
             setImage(e.target.files[0]);
         }
     };
+
+    
     const handleNewPostSubmit = (event) => {
         try {
             event.preventDefault();
@@ -83,6 +150,55 @@ export default function Dashboard() {
                 shares: 0,
                 image: image ? URL.createObjectURL(image) : null,
             };
+            // firebase upload function
+            // Upload file and metadata to the object 'images/mountains.jpg'
+            const storageRef = ref(storage, 'images/' + image.name);
+            const uploadTask = uploadBytesResumable(storageRef, image, metadata);
+            
+            // Listen for state changes, errors, and completion of the upload.
+            uploadTask.on('state_changed',
+                (snapshot) => {
+                // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('Upload is ' + progress + '% done');
+                switch (snapshot.state) {
+                    case 'paused':
+                    console.log('Upload is paused');
+                    break;
+                    case 'running':
+                    console.log('Upload is running');
+                    break;
+                    default:
+                    console.log("default");
+                }
+                }, 
+                (error) => {
+                // A full list of error codes is available at
+                // https://firebase.google.com/docs/storage/web/handle-errors
+                switch (error.code) {
+                    case 'storage/unauthorized':
+                    // User doesn't have permission to access the object
+                    break;
+                    case 'storage/canceled':
+                    // User canceled the upload
+                    break;
+            
+                    // ...
+            
+                    case 'storage/unknown':
+                    // Unknown error occurred, inspect error.serverResponse
+                    break;
+                    default:
+                    console.log("default");
+                }
+                }, 
+                () => {
+                // Upload completed successfully, now we can get the download URL
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    console.log('File available at', downloadURL);
+                });
+                }
+            );
 
             setPost([...post, newPost]); // Add new post to state
             setNewPostContent(""); // Clear the new post content
@@ -92,6 +208,7 @@ export default function Dashboard() {
             window.alert('Error adding post!');
         }
     };
+
     if(user === null) {
         navigate("/login");
     } else {
