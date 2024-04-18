@@ -51,8 +51,9 @@ const Signup = () => {
         return (
             <main >        
                 <section>
-                    <div>
-                        <div>                  
+                    <div className='container'>
+                        <div className='row justify-content-center'>                 
+                        <div className='col-md-6 center-div'> 
                             <h1> Sign Up </h1>                                                                            
                             <form className='form-group'>                                                                                            
                                 <div className='form-control'>
@@ -94,7 +95,8 @@ const Signup = () => {
                                 <NavLink to="/login" >
                                     Sign in
                                 </NavLink>
-                            </p>                   
+                            </p>
+                        </div>                   
                         </div>
                     </div>
                 </section>

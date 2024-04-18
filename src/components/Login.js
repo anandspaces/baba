@@ -47,7 +47,9 @@ const Login = () => {
             <>
                 <main >        
                     <section>
-                        <div>                                            
+                        <div className='container'>
+                            <div className='row justify-content-center'><div className='col-md-6 center-div'>
+                                                                            
                             <h1> Login </h1>                       
                                                            
                             <form className='form-group'>                                              
@@ -92,7 +94,7 @@ const Login = () => {
                                     Sign up
                                 </NavLink>
                             </p>
-                                                       
+                            </div></div>                       
                         </div>
                     </section>
                 </main>
