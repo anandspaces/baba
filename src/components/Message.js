@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Sidebar from './Sidebar';
 import {useNavigate} from 'react-router-dom';
 import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
@@ -47,7 +46,7 @@ export default function Message() {
         return (
             <div className="container mt-4">
                 <div className="row">
-                    <div className="col-md-8">
+                    <div className="col">
                         <div className="card">
                             <div className="card-header">
                             <h2 className="card-title mb-0">Messages</h2>
@@ -79,9 +78,6 @@ export default function Message() {
                             </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="col-md-4">
-                        <Sidebar/>
                     </div>
                 </div>
             </div>

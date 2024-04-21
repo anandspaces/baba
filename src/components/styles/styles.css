@@ -87,3 +87,8 @@ body {
 .inputfile + .customLabel {
     cursor: pointer; /* Pointer cursor */
 }
+
+.log {
+    border: 1px groove black;
+    
+}

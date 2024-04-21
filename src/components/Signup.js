@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import {  createUserWithEmailAndPassword  } from 'firebase/auth';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
- 
+import './styles/styles.css';
 const Signup = () => {
     const [user, setUser] = useState(null);
     useEffect(()=>{
@@ -51,9 +51,11 @@ const Signup = () => {
         return (
             <main >        
                 <section>
-                    <div className='container'>
-                        <div className='row justify-content-center'>                 
-                        <div className='col-md-6 center-div'> 
+                    <div className='container h-100'>
+                        <div className='row h-100 justify-content-center align-items-center'>                 
+                        <div className='col-md-6 '> 
+                        <div className="card">
+                        <div className="card-body">
                             <h1> Sign Up </h1>                                                                            
                             <form className='form-group'>                                                                                            
                                 <div className='form-control'>
@@ -93,9 +95,11 @@ const Signup = () => {
                             <p>
                                 Already have an account?{' '}
                                 <NavLink to="/login" >
-                                    Sign in
+                                    Login
                                 </NavLink>
                             </p>
+                        </div>
+                        </div>
                         </div>                   
                         </div>
                     </div>

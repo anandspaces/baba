@@ -47,8 +47,11 @@ const Login = () => {
             <>
                 <main >        
                     <section>
-                        <div className='container'>
-                            <div className='row justify-content-center'><div className='col-md-6 center-div'>
+                    <div className='container h-100'>
+                        <div className='row h-100 justify-content-center align-items-center'>                 
+                        <div className='col-md-6 '> 
+                        <div className="card">
+                        <div className="card-body">
                                                                             
                             <h1> Login </h1>                       
                                                            
@@ -94,7 +97,10 @@ const Login = () => {
                                     Sign up
                                 </NavLink>
                             </p>
-                            </div></div>                       
+                            </div>
+                            </div>
+                            </div>
+                            </div>                       
                         </div>
                     </section>
                 </main>
