@@ -14,80 +14,27 @@ import Gallery from './Gallery';
 
 
 export default function Dashboard() {
-    // firebase storage
-    // firebase storage download
-    // const starsRef = ref(storage, 'images/stars.jpg');
-    // // Get the download URL
-    // getDownloadURL(starsRef)
-    // .then((url) => {
-    // // Insert url into an <img> tag to "download"
-    // })
-    // .catch((error) => {
-    // // A full list of error codes is available at
-    // // https://firebase.google.com/docs/storage/web/handle-errors
-    // switch (error.code) {
-    //     case 'storage/object-not-found':
-    //     // File doesn't exist
-    //     break;
-    //     case 'storage/unauthorized':
-    //     // User doesn't have permission to access the object
-    //     break;
-    //     case 'storage/canceled':
-    //     // User canceled the upload
-    //     break;
-
-    //     // ...
-
-    //     case 'storage/unknown':
-    //     // Unknown error occurred, inspect the server response
-    //     break;
-    //     default:
-    //     console.log("default");
-    // }
-    // });
-
-    // firebase upload
-    // Create the file metadata
 /** @type {any} */
-const metadata = {
-    contentType: 'image/jpeg'
-  };
-  
-  
-  
-    // Points to the root reference
-    // const storageRef = ref(storage);
-
-    // Points to 'images'
-    // const imagesRef = ref(storageRef, 'images');
-
-    // Points to 'images/space.jpg'
-    // Note that you can use variables to create child values
-    // const fileName = 'space.jpg';
-    // const spaceRef = ref(imagesRef, fileName);
-
-    // File path is 'images/space.jpg'
-    // const path = spaceRef.fullPath;
-
-    // File name is 'space.jpg'
-    // const name = spaceRef.name;
-
-    // Points to 'images'
-    // const imagesRefAgain = spaceRef.parent;
-
+    const metadata = {
+        contentType: 'image/jpeg'
+    };
+    
     const navigate = useNavigate();
     const [user, setUser] = useState(null);
     useEffect(()=>{
         onAuthStateChanged(auth, (user) => {
             if (user) {
-              // User is signed in
-              const uid = user.uid;
-              setUser(user);
-              console.log("uid", uid);
+                // User is signed in
+                const uid = user.uid;
+                const displayName = user.username;
+                const email = user.email;
+
+                setUser(user);
+                console.log("uid", uid,displayName,email);
             } else {
-              // User is signed out
-              setUser(null);
-              console.log("user is logged out")
+                // User is signed out
+                setUser(null);
+                console.log("user is logged out")
             }
           });
     }, []);
@@ -174,8 +121,6 @@ const metadata = {
                 }
                 }, 
                 (error) => {
-                // A full list of error codes is available at
-                // https://firebase.google.com/docs/storage/web/handle-errors
                 switch (error.code) {
                     case 'storage/unauthorized':
                     // User doesn't have permission to access the object
