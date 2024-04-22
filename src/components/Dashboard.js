@@ -10,8 +10,6 @@ import { useNavigate } from 'react-router-dom';
 
 // firebase storage
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
-import Gallery from './Gallery';
-
 
 export default function Dashboard() {
 /** @type {any} */
@@ -230,7 +228,6 @@ export default function Dashboard() {
                                 </div>
                             </div>
                         ))}
-                        < Gallery />
                     </div>
                     <div className="col-md-4">
                         <Sidebar />

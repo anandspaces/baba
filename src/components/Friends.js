@@ -21,9 +21,10 @@ export default function Friends() {
     }, []);
     // Dummy data for friends list
     const [friends, setFriends] = useState([
-        { id: 1, name: 'John Doe' },
-        { id: 2, name: 'Jane Smith' },
-        { id: 3, name: 'Alice Johnson' },
+        { id: 1, name: 'Ram Roy' },
+        { id: 2, name: 'Sam Shaw' },
+        { id: 3, name: 'Tom Tichkule' },
+        { id: 4, name: 'Vaibhaw Anand' },
         // Add more friends as needed
     ]);
 
@@ -62,10 +63,10 @@ export default function Friends() {
                         <div className="col-md-6">
                         <div className="profile-details">
                             <h3 className="profile-details-title mb-3">Profile Details</h3>
-                            <p className="mb-2"><strong>Name:</strong> John Doe</p>
-                            <p className="mb-2"><strong>Email:</strong> john.doe@example.com</p>
-                            <p className="mb-2"><strong>Location:</strong> New York, USA</p>
-                            <p className="mb-2"><strong>Interests:</strong> Traveling, Photography, Cooking</p>
+                            <p className="mb-2"><strong>Name:</strong> Vaibhaw Anand</p>
+                            <p className="mb-2"><strong>Email:</strong> anandvaibhaw000@gmail.com</p>
+                            <p className="mb-2"><strong>Location:</strong> Aurangabad &#40;Bihar&#41;</p>
+                            <p className="mb-2"><strong>Interests:</strong> Traveling, Coding, Cooking</p>
                         </div>
                         </div>
                     </div>
