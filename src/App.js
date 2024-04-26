@@ -10,10 +10,11 @@ import MessageApp from './components/MessageApp';
 import Comment from './components/Comment'
 import Login from './components/Login';
 import Signup from './components/Signup';
+import { DarkModeProvider } from './components/DarkModeProvider';
 
 function App() {
   return (
-    <>
+    <DarkModeProvider>
         <Router>
           <Navigation />
           <Routes>
@@ -29,7 +30,7 @@ function App() {
           </Routes>
           <Footer />
         </Router>
-    </>
+    </DarkModeProvider>
   );
 }
 

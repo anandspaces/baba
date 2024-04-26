@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import { signOut, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '../firebase';
 import { useNavigate } from 'react-router-dom';
+import { useDarkMode } from './DarkModeProvider';
 
 export default function Navigation() {
+    const { isDarkMode, toggleDarkMode } = useDarkMode();
     const [user, setUser] = useState(null);
     useEffect(()=>{
         onAuthStateChanged(auth, (user) => {
@@ -89,6 +91,7 @@ export default function Navigation() {
                                     <li><button className="dropdown-item">Settings</button></li>
                                     <li><button className="dropdown-item">Help</button></li>
                                     <li><button className="dropdown-item" onClick={handleLogout}>Logout</button></li>
+                                    <li><button className="dropdown-item" onClick={toggleDarkMode}>{isDarkMode ? 'Light Mode' : 'Dark Mode'}</button></li>
                                 </ul>
                             </li>
                         </ul>
