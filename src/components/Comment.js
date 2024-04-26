@@ -24,32 +24,32 @@ function Comment() {
         getCommentList();
     }, [getCommentList]);
 
-  const addComment = async (e) => {
-    e.preventDefault();
-    if (!input.trim()) return;
-    try {
-        await addDoc(commentsCollectionRef, {
-            comment: input,
-        });
-        setInput('');
-        getCommentList();
-        console.log("success");
-    } catch (err) {
-        console.error(err);
-    }
-  };
-
-  const handleDelete = async (commentId) => {
-    try {
-        await deleteDoc(db.collection('comments').doc(commentId));
-        // Updating comments state by filtering out the deleted comment
-        setComments((prevComments) =>
-            prevComments.filter((comment) => comment.id !== commentId)
-        );
-    } catch (error) {
-        console.error("Error removing document: ", error);
-    }
+    const addComment = async (e) => {
+        e.preventDefault();
+        if (!input.trim()) return;
+        try {
+            await addDoc(commentsCollectionRef, {
+                comment: input,
+            });
+            setInput('');
+            getCommentList();
+            console.log("success");
+        } catch (err) {
+            console.error(err);
+        }
     };
+
+    const handleDelete = async (commentId) => {
+        try {
+            await deleteDoc(db.collection('comments').doc(commentId));
+            // Updating comments state by filtering out the deleted comment
+            setComments((prevComments) =>
+                prevComments.filter((comment) => comment.id !== commentId)
+            );
+        } catch (error) {
+            console.error("Error removing document: ", error);
+        }
+        };
 
     return (
     <div className="container mt-5">
@@ -90,19 +90,19 @@ function Comment() {
 }
 
 function CommentDelete({ comment, onDelete }) {
-  const handleDelete = () => {
-    onDelete(comment.id);
-  };
-  return (
-    <li className="list-group-item d-flex justify-content-between align-items-center">
-      <div>
-        <p>{comment.comment}</p>
-      </div>
-      <button className="btn btn-outline-danger" onClick={handleDelete}>
-        Delete
-      </button>
-    </li>
-  );
+    const handleDelete = () => {
+        onDelete(comment.id);
+    };
+    return (
+        <li className="list-group-item d-flex justify-content-between align-items-center">
+        <div>
+            <p>{comment.comment}</p>
+        </div>
+        <button className="btn btn-outline-danger" onClick={handleDelete}>
+            Delete
+        </button>
+        </li>
+    );
 }
 
 export default Comment;
