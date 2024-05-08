@@ -6,7 +6,7 @@ import './styles/styles.css';
 // import Comment from './Comment';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, storage } from '../firebase';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 // firebase storage
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
@@ -215,7 +215,9 @@ export default function Dashboard() {
                                                     <p className="mb-0 me-4">{likes[post.id - 1]}</p>
                                                 </div>
                                                 <div className="d-flex align-items-center">
-                                                    <button className="btn btn-icon btn-outline-secondary me-2"><i className="bi bi-chat"></i></button>
+                                                    <button className="btn btn-icon btn-outline-secondary me-2">
+                                                        <Link to='/comment'><i className="bi bi-chat"></i></Link>
+                                                        </button>
                                                     <p className="mb-0 me-4">{post.comments}</p>
                                                 </div>
                                                 <div className="d-flex align-items-center">

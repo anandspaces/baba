@@ -66,7 +66,7 @@ export default function Friends() {
                             <p className="mb-2"><strong>Name:</strong> Vaibhaw Anand</p>
                             <p className="mb-2"><strong>Email:</strong> anandvaibhaw000@gmail.com</p>
                             <p className="mb-2"><strong>Location:</strong> Aurangabad &#40;Bihar&#41;</p>
-                            <p className="mb-2"><strong>Interests:</strong> Traveling, Coding, Cooking</p>
+                            <p className="mb-2"><strong>Interests:</strong> Travelling, Coding, Cooking</p>
                         </div>
                         </div>
                     </div>
